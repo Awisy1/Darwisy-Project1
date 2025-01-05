@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Filter Effects</title>
+    <link rel="stylesheet" href="styles.css">
+	<style>
+	
+	  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(images/meteor.jpg);
+            height: 100vh;
+            background-position: center;
+			background-attachment: fixed; 
+            background-size: cover;
+            color: #fff;
+            overflow-y:auto;
+        }
+		
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px 50px;
+			background-color: rgba(0, 0, 0, 0.5);
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 10;
+			backdrop-filter: blur(8px);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			animation: fadeIn 0.5s ease-out;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(-20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.navbar h1 {
+			font-size: 1.5rem;
+			color: #00d4ff;
+			position: relative;
+			overflow: hidden;
+			padding: 5px 0;
+		}
+
+		.navbar h1::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+			animation: shine 3s infinite;
+		}
+
+		@keyframes shine {
+			0% { transform: translateX(-100%); }
+			100% { transform: translateX(100%); }
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 20px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			text-decoration: none;
+			color: #00d4ff;
+			font-size: 1rem;
+			padding: 8px 0;
+			position: relative;
+			transition: all 0.3s ease;
+		}
+
+		.nav-links a::before {
+			content: '';
+			position: absolute;
+			bottom: -2px;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background-color: #00d4ff;
+			transform: scaleX(0);
+			transform-origin: right;
+			transition: transform 0.3s ease;
+		}
+
+		.nav-links a:hover {
+			color: #fff;
+			transform: translateY(-2px);
+		}
+
+		.nav-links a:hover::before {
+			transform: scaleX(1);
+			transform-origin: left;
+		}
+		
+		.description-box {
+    margin-top: 120px;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.2),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    animation: boxGlow 4s ease-in-out infinite;
+}
+
+.description-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #00f7ff, #0066ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 10px rgba(0, 247, 255, 0.5),
+        0 0 20px rgba(0, 247, 255, 0.3),
+        0 0 30px rgba(0, 247, 255, 0.2);
+    animation: titleFlicker 5s infinite;
+}
+
+.description-box p {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background: linear-gradient(90deg, #00d4ff, #0088ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 8px rgba(0, 212, 255, 0.6),
+        0 0 12px rgba(0, 212, 255, 0.3);
+    margin: 0 auto;
+    max-width: 800px;
+    animation: textPulse 3s ease-in-out infinite;
+}
+
+@keyframes boxGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(0, 212, 255, 0.2),
+            inset 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(0, 212, 255, 0.4),
+            inset 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+}
+
+@keyframes titleFlicker {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 
+            0 0 10px rgba(0, 247, 255, 0.5),
+            0 0 20px rgba(0, 247, 255, 0.3),
+            0 0 30px rgba(0, 247, 255, 0.2);
+    }
+    5%, 95% {
+        opacity: 0.8;
+        text-shadow: none;
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 8px rgba(0, 212, 255, 0.6),
+            0 0 12px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 14px rgba(0, 212, 255, 0.8),
+            0 0 18px rgba(0, 212, 255, 0.4);
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: system-ui, -apple-system, sans-serif;
+    background-color: #f3f4f6;
+    padding: 2rem;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+
+.card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    border-radius: 0.75rem;
+    overflow: hidden;
+    background-color: white;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+.card-image {
+    position: relative;
+    height: 250px;
+    overflow: hidden;
+}
+
+.card-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.card:hover img {
+    transform: scale(1.1);
+}
+
+.card-overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 1rem;
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
+}
+
+
+
+/* Filter Effects */
+.grayscale img {
+    filter: grayscale(100%);
+}
+
+.grayscale:hover img {
+    filter: grayscale(0%);
+}
+
+.sepia img {
+    filter: sepia(100%);
+}
+
+.sepia:hover img {
+    filter: sepia(0%);
+}
+
+.blur img {
+    filter: blur(3px);
+}
+
+.blur:hover img {
+    filter: blur(0);
+}
+
+.brightness img {
+    filter: brightness(50%);
+}
+
+.brightness:hover img {
+    filter: brightness(100%);
+}
+
+.contrast img {
+    filter: contrast(50%);
+}
+
+.contrast:hover img {
+    filter: contrast(100%);
+}
+
+.saturate img {
+    filter: saturate(0);
+}
+
+.saturate:hover img {
+    filter: saturate(100%);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    }
+    
+    body {
+        padding: 1rem;
+    }
+}
+
+/* Update container styles to add bottom padding */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 80px; /* Add padding to prevent footer overlap */
+}
+
+/* Update footer styles */
+.footer {
+	position:fixed;
+	bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 20px 0; /* Adjust padding */
+    z-index: 10;
+    animation: slideUp 0.5s ease-out;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; /* Center text */
+}
+
+.footer-left {
+    color: #00d4ff;
+	
+
+}
+
+</style>
+</head>
+<body>
+
+   <div class="navbar">
+        <h1>Darwisy</h1>
+        <div class="nav-links">
+            <a href="Portfolio.html">Home</a>
+            <a href="biodata.html">About me</a>
+            <a href="experience.html">Experience</a>
+            <a href="music.html">Music</a>
+            <a href="sports.html">Sports</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+    </div>
+
+    <div id="description" class="description-box">
+        <h2>Sports</h2>
+        <p>Football is the only sports that can bring me joy.</p>
+    </div>
+
+    <div class="container">
+        
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-image grayscale">
+                    <img src="images/fb1.jpg" alt="Grayscale Effect">
+                    <div class="card-overlay">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image sepia">
+                    <img src="images/fb2.jpg" alt="Sepia Effect">
+                    <div class="card-overlay">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image blur">
+                    <img src="images/fb3.jpg" alt="Blur Effect">
+                    <div class="card-overlay">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image brightness">
+                    <img src="images/fb4.jpg" alt="Brightness Effect">
+                    <div class="card-overlay">
+                        
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image contrast">
+                    <img src="images/fb5.jpg" alt="Contrast Effect">
+                    <div class="card-overlay">
+                     
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-image saturate">
+                    <img src="images/fb6.jpg" alt="Saturate Effect">
+                    <div class="card-overlay">
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+		 <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2024 Muhammad Darwisy. All rights reserved.</p>
+            </div>
+            
+            
+        
+    </footer>
+    </div>
+</body>
+</html>

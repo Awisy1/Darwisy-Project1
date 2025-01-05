@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+    <link rel="stylesheet" href="styles.css">
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+     background-image: url('images/meteor.jpg');
+      height: 100vh;
+       background-position: center;
+       background-size: cover;
+        color: #fff;
+       overflow-y: auto;
+	background-attachment: fixed; 
+}
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 10;
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            position: relative;
+            overflow: hidden;
+            padding: 5px 0;
+        }
+
+        .navbar h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                transform: translateX(-100%);
+            }
+            100% {
+                transform: translateX(100%);
+            }
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #00d4ff;
+            font-size: 1rem;
+            padding: 8px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #00d4ff;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #fff;
+            transform: translateY(-2px);
+        }
+
+        .nav-links a:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+		
+
+
+		@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600&display=swap');
+		
+	
+
+.description-box {
+    margin-top: 120px;
+    margin-bottom: 4rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.2),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    animation: boxGlow 4s ease-in-out infinite;
+}
+
+.description-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(45deg, #00f7ff, #0066ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 10px rgba(0, 247, 255, 0.5),
+        0 0 20px rgba(0, 247, 255, 0.3),
+        0 0 30px rgba(0, 247, 255, 0.2);
+    animation: titleFlicker 5s infinite;
+}
+
+.description-box p {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background: linear-gradient(90deg, #00d4ff, #0088ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 8px rgba(0, 212, 255, 0.6),
+        0 0 12px rgba(0, 212, 255, 0.3);
+    margin: 0 auto;
+    max-width: 800px;
+    animation: textPulse 3s ease-in-out infinite;
+}
+
+@keyframes boxGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(0, 212, 255, 0.2),
+            inset 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(0, 212, 255, 0.4),
+            inset 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+}
+
+@keyframes titleFlicker {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 
+            0 0 10px rgba(0, 247, 255, 0.5),
+            0 0 20px rgba(0, 247, 255, 0.3),
+            0 0 30px rgba(0, 247, 255, 0.2);
+    }
+    5%, 95% {
+        opacity: 0.8;
+        text-shadow: none;
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 8px rgba(0, 212, 255, 0.6),
+            0 0 12px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 14px rgba(0, 212, 255, 0.8),
+            0 0 18px rgba(0, 212, 255, 0.4);
+    }
+}
+
+.music-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 100px; /* Increase padding at the bottom */
+}
+
+.music-player {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 1.5rem;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+}
+
+.music-player:hover {
+    transform: translateY(-5px);
+}
+
+.music-player img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 1rem;
+}
+
+.song-info {
+    margin-bottom: 1rem;
+}
+
+.song-info h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.song-info p {
+    color: #ccc;
+    font-size: 0.9rem;
+}
+
+.progress-bar {
+    margin-bottom: 1rem;
+}
+
+.progress {
+    width: 100%;
+    height: 5px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+.time {
+    display: flex;
+    justify-content: space-between;
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.controls {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.controls button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5rem;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.1);
+    transition: background 0.3s ease;
+}
+
+.controls button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+@media (max-width: 768px) {
+    .music-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    body {
+        padding: 1rem;
+    }
+    
+    .description-box {
+        padding: 1.5rem;
+    }
+    
+    .description-box h2 {
+        font-size: 2rem;
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px 0; /* Slightly reduce padding */
+    z-index: 10;
+    animation: slideUp 0.5s ease-out;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.footer-left {
+    color: #00d4ff;
+}
+
+/* Add media query for better responsiveness */
+@media (max-width: 768px) {
+    .music-grid {
+        padding-bottom: 120px; /* Even more padding on mobile */
+    }
+}
+</style>
+</head>
+<body>
+
+
+
+    <div class="navbar">
+        <h1>Darwisy</h1>
+        <div class="nav-links">
+            <a href="Portfolio.html">Home</a>
+            <a href="biodata.html">About me</a>
+            <a href="experience.html">Experience</a>
+            <a href="music.html">Music</a>
+            <a href="sports.html">Sports</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+    </div>
+
+    <div id="description" class="description-box">
+        <h2>Music</h2>
+        <p>Some of my music collection! These songs are my favorite go-to beats, keeping me company when I'm bored or doing activities throughout my days.</p>
+    </div>
+
+
+    <div class="music-grid">
+        <div class="music-player">
+            <img src="images/Billie.webp" alt="Song 1">
+            <div class="song-info">
+                <h3>Birds Of A Feather</h3>
+                <p>Billie Eilish</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/bof.mp3"></audio>
+        </div>
+
+        <div class="music-player">
+            <img src="images/ir.jpg" alt="Song 2">
+            <div class="song-info">
+                <h3>Reminisensi</h3>
+                <p>Insomniacks</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/ir.mp3"></audio>
+        </div>
+
+        <div class="music-player">
+            <img src="images/saturn.webp" alt="Song 3">
+            <div class="song-info">
+                <h3>Saturn</h3>
+                <p>Sza</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/saturn.mp3"></audio>
+        </div>
+
+        <div class="music-player">
+            <img src="images/tory.jpg" alt="Song 4">
+            <div class="song-info">
+                <h3>Lady Of Namek</h3>
+                <p>Tory Lanez</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/tory.mp3"></audio>
+        </div>
+    
+	 <div class="music-player">
+            <img src="images/nbg.jpg" alt="Song 5">
+            <div class="song-info">
+                <h3>Nobody Gets Me</h3>
+                <p>Sza</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/nbg.mp3"></audio>
+        </div>
+
+        <div class="music-player">
+            <img src="images/blue.jpg" alt="Song 6">
+            <div class="song-info">
+                <h3>Blue</h3>
+                <p>Yung Kai</p>
+            </div>
+            <div class="progress-bar">
+                <input type="range" value="0" class="progress">
+                <div class="time">
+                    <span class="current">0:00</span>
+                    <span class="duration">0:00</span>
+                </div>
+            </div>
+            <div class="controls">
+                <button class="prev">⏮</button>
+                <button class="play">▶</button>
+                <button class="next">⏭</button>
+                <button class="mute">🔊</button>
+            </div>
+            <audio src="songs/blue.mp3"></audio>
+        </div>
+    </div>
+	 <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2024 Muhammad Darwisy. All rights reserved.</p>
+            </div>
+            
+            
+        
+    </footer>
+
+
+    <script src="script.js"></script>
+	<script>
+	document.addEventListener('DOMContentLoaded', () => {
+    const players = document.querySelectorAll('.music-player');
+    
+    players.forEach(player => {
+        const audio = player.querySelector('audio');
+        const playBtn = player.querySelector('.play');
+        const prevBtn = player.querySelector('.prev');
+        const nextBtn = player.querySelector('.next');
+        const muteBtn = player.querySelector('.mute');
+        const progress = player.querySelector('.progress');
+        const currentTime = player.querySelector('.current');
+        const duration = player.querySelector('.duration');
+
+        // Set audio source - replace with your audio file path
+        // audio.src = 'path/to/your/audio/file.mp3';
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            seconds = Math.floor(seconds % 60);
+            return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function updateProgress() {
+            const percent = (audio.currentTime / audio.duration) * 100;
+            progress.value = percent;
+            currentTime.textContent = formatTime(audio.currentTime);
+        }
+
+        audio.addEventListener('loadedmetadata', () => {
+            duration.textContent = formatTime(audio.duration);
+            progress.value = 0;
+        });
+
+        audio.addEventListener('timeupdate', updateProgress);
+
+        playBtn.addEventListener('click', () => {
+            if (audio.paused) {
+                audio.play();
+                playBtn.textContent = '⏸';
+            } else {
+                audio.pause();
+                playBtn.textContent = '▶';
+            }
+        });
+
+        muteBtn.addEventListener('click', () => {
+            audio.muted = !audio.muted;
+            muteBtn.textContent = audio.muted ? '🔇' : '🔊';
+        });
+
+        progress.addEventListener('input', () => {
+            const time = (progress.value / 100) * audio.duration;
+            audio.currentTime = time;
+        });
+
+        // Add your prev/next functionality here
+        prevBtn.addEventListener('click', () => {
+            audio.currentTime = 0;
+        });
+
+        nextBtn.addEventListener('click', () => {
+            audio.currentTime = 0;
+        });
+    });
+});
+</script>
+</body>
+</html>
+

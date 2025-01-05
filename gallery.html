@@ -1,0 +1,697 @@
+  <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Filter Effects</title>
+    <link rel="stylesheet" href="styles.css">
+	<style>
+	
+  * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url(images/meteor.jpg);
+            height: 100vh;
+            background-position: center;
+			background-attachment: fixed; 
+            background-size: cover;
+            color: #fff;
+            overflow-y:auto;
+        }
+		
+		.navbar {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			padding: 20px 50px;
+			background-color: rgba(0, 0, 0, 0.5);
+			position: fixed;
+			top: 0;
+			width: 100%;
+			z-index: 10;
+			backdrop-filter: blur(8px);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			animation: fadeIn 0.5s ease-out;
+		}
+
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(-20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+		.navbar h1 {
+			font-size: 1.5rem;
+			color: #00d4ff;
+			position: relative;
+			overflow: hidden;
+			padding: 5px 0;
+		}
+
+		.navbar h1::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+			animation: shine 3s infinite;
+		}
+
+		@keyframes shine {
+			0% { transform: translateX(-100%); }
+			100% { transform: translateX(100%); }
+		}
+
+		.nav-links {
+			display: flex;
+			gap: 20px;
+			list-style: none;
+		}
+
+		.nav-links a {
+			text-decoration: none;
+			color: #00d4ff;
+			font-size: 1rem;
+			padding: 8px 0;
+			position: relative;
+			transition: all 0.3s ease;
+		}
+
+		.nav-links a::before {
+			content: '';
+			position: absolute;
+			bottom: -2px;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background-color: #00d4ff;
+			transform: scaleX(0);
+			transform-origin: right;
+			transition: transform 0.3s ease;
+		}
+
+		.nav-links a:hover {
+			color: #fff;
+			transform: translateY(-2px);
+		}
+
+		.nav-links a:hover::before {
+			transform: scaleX(1);
+			transform-origin: left;
+		}
+		
+		 .gallery-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding-top: 100px; /* Add padding to push content below navbar */
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            color: white;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-caption {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .gallery-caption h3 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .gallery-caption p {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Lightbox styles */
+        .lightbox {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .lightbox.active {
+            display: flex;
+        }
+
+        .lightbox img {
+            max-width: 90%;
+            max-height: 90vh;
+            object-fit: contain;
+        }
+
+        .close-lightbox {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                gap: 15px;
+                padding: 15px;
+            }
+        }
+		
+		.description-box {
+    margin-top: 120px;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    background: rgba(0, 0, 0, 0.7);
+    border-radius: 15px;
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid rgba(0, 212, 255, 0.3);
+    box-shadow: 
+        0 0 20px rgba(0, 212, 255, 0.2),
+        inset 0 0 20px rgba(0, 212, 255, 0.1);
+    animation: boxGlow 4s ease-in-out infinite;
+}
+
+.description-box h2 {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+    background: linear-gradient(45deg, #00f7ff, #0066ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 
+        0 0 10px rgba(0, 247, 255, 0.5),
+        0 0 20px rgba(0, 247, 255, 0.3),
+        0 0 30px rgba(0, 247, 255, 0.2);
+    animation: titleFlicker 5s infinite;
+}
+
+.description-box p {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    background: linear-gradient(90deg, #00d4ff, #0088ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    text-shadow: 
+        0 0 8px rgba(0, 212, 255, 0.6),
+        0 0 12px rgba(0, 212, 255, 0.3);
+    margin: 0 auto;
+    max-width: 800px;
+    animation: textPulse 3s ease-in-out infinite;
+}
+
+@keyframes boxGlow {
+    0%, 100% {
+        box-shadow: 
+            0 0 20px rgba(0, 212, 255, 0.2),
+            inset 0 0 20px rgba(0, 212, 255, 0.1);
+    }
+    50% {
+        box-shadow: 
+            0 0 30px rgba(0, 212, 255, 0.4),
+            inset 0 0 30px rgba(0, 212, 255, 0.2);
+    }
+}
+
+@keyframes titleFlicker {
+    0%, 100% {
+        opacity: 1;
+        text-shadow: 
+            0 0 10px rgba(0, 247, 255, 0.5),
+            0 0 20px rgba(0, 247, 255, 0.3),
+            0 0 30px rgba(0, 247, 255, 0.2);
+    }
+    5%, 95% {
+        opacity: 0.8;
+        text-shadow: none;
+    }
+}
+
+@keyframes textPulse {
+    0%, 100% {
+        text-shadow: 
+            0 0 8px rgba(0, 212, 255, 0.6),
+            0 0 12px rgba(0, 212, 255, 0.3);
+    }
+    50% {
+        text-shadow: 
+            0 0 14px rgba(0, 212, 255, 0.8),
+            0 0 18px rgba(0, 212, 255, 0.4);
+    }
+}
+		
+	.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 80px; /* Add padding to prevent footer overlap */
+}
+
+/* Update footer styles */
+.footer {
+	position:fixed;
+	bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(8px);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 10px 0; /* Adjust padding */
+    z-index: 10;
+    animation: slideUp 0.5s ease-out;
+}
+
+.footer-content {
+    display: flex;
+    justify-content: center; /* Center content horizontally */
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center; /* Center text */
+}
+
+.footer-left {
+    color: #00d4ff;
+	
+}
+
+.jump-container {
+    display: flex;
+    justify-content: center; /* Center the button horizontally */
+    margin: 40px 0 100px 0; 
+}
+
+.jump-to-top {
+    display: inline-block;
+    padding: 12px 24px;
+    font-family: 'Orbitron', sans-serif;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #fff;
+    background: linear-gradient(45deg, #00d4ff, #0088ff);
+    border-radius: 25px;
+    border: 2px solid rgba(0, 212, 255, 0.5);
+    box-shadow: 
+        0 0 10px rgba(0, 212, 255, 0.5),
+        0 0 20px rgba(0, 212, 255, 0.3),
+        inset 0 0 15px rgba(0, 212, 255, 0.3);
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.jump-to-top::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(255, 255, 255, 0.2),
+        transparent
+    );
+    transition: 0.5s;
+    z-index: -1;
+}
+
+.jump-to-top:hover::before {
+    left: 100%;
+}
+
+.jump-to-top:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 0 15px rgba(0, 212, 255, 0.7),
+        0 0 30px rgba(0, 212, 255, 0.4),
+        inset 0 0 20px rgba(0, 212, 255, 0.4);
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
+}
+</style>
+</head>
+<body>
+
+   <div class="navbar">
+        <h1>Darwisy</h1>
+        <div class="nav-links">
+            <a href="Portfolio.html">Home</a>
+            <a href="biodata.html">About me</a>
+            <a href="experience.html">Experience</a>
+            <a href="music.html">Music</a>
+            <a href="sports.html">Sport</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+    </div>
+
+
+ <div id="family-description" class="description-box">
+ 
+ <p id="top"></p>
+        <h2>Family</h2>
+    </div>
+	
+    <div class="gallery-container">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/fam2.jpg" alt="Nature 1">
+                <div class="gallery-caption">
+                    <h3>My mom</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/fam4.jpg" alt="Nature 2">
+                <div class="gallery-caption">
+                    <h3>Polaroid</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/fam1.jpg" alt="Nature 3">
+                <div class="gallery-caption">
+                    <h3>My family</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="friends-description" class="description-box">
+        <h2>Friends & myself</h2>
+    </div>
+
+    <div class="gallery-container" style="padding-top: 20px;">
+        <div class="gallery-grid">
+            <div class="gallery-item">
+                <img src="images/uitm.jpg" alt="Nature 4">
+                <div class="gallery-caption">
+                    <h3>Parking uitm</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/blp.jpg" alt="Nature 5">
+                <div class="gallery-caption">
+                    <h3>Saga Zha</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/siraiman.jpg" alt="Nature 6">
+                <div class="gallery-caption">
+                    <h3>With Sir Aiman</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/kem.jpg" alt="Nature 6">
+                <div class="gallery-caption">
+                    <h3>Camp TTS</h3>
+                </div>
+            </div>
+            <div class="gallery-item">
+                <img src="images/g2.jpg" alt="Nature 6">
+                <div class="gallery-caption">
+                    <h3>Pink Dolphin Sunsets</h3>
+                </div>
+            </div>
+			 <div class="gallery-item">
+                <img src="images/hiking.jpg" alt="Nature 6">
+                <div class="gallery-caption">
+                    <h3>Hiking</h3>
+                </div>
+            </div>
+			 <div class="gallery-item">
+                <img src="images/p1.jpg" alt="Nature 3">
+                <div class="gallery-caption">
+                    <h3>Selfie</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/genting.jpg" alt="Nature 1">
+                <div class="gallery-caption">
+                    <h3>Liza's Family</h3>
+                </div>
+            </div>
+			 <div class="gallery-item">
+                <img src="images/wedding.jpg" alt="Nature 2">
+                <div class="gallery-caption">
+                    <h3>Wedding</h3>
+                </div>
+            </div>
+			 <div class="gallery-item">
+                <img src="images/fyp.jpg" alt="Inkspire Future">
+                <div class="gallery-caption">
+                    <h3>Inkspire Future</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/me.jpg" alt="Saga Zha">
+                <div class="gallery-caption">
+                    <h3>Me</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/uitm.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Parking UITM</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/fyp2.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Before Event</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/classmate.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Classmate</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/classmate2.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Pina&Ena</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/zico.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>With Zico</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/beach.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Sunset</h3>
+                </div>
+            </div>
+			
+			<div class="gallery-item">
+                <img src="images/her.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Once</h3>
+                </div>
+            </div>
+			<div class="gallery-item">
+                <img src="images/baby.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Baby me</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/sg.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Sg Talan</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/smk1.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Semekar Boys</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/smk2.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>5 Fressia</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/dean.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Dean List</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/gsd.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Ghombau Sports Day</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/court.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Week Without Wall</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/outing.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Ride</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/d1.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Mirror</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/l1.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>After Exam</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/smk4.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Freesia Reunion</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/ride.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Teaching Someone</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/l2.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Before Intern</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/event2.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Thanks For coming</h3>
+                </div>
+			</div>
+			<div class="gallery-item">
+                <img src="images/pd.jpg" alt="Parking UITM">
+                <div class="gallery-caption">
+                    <h3>Luffy&Dini</h3>
+                </div>
+			</div>
+
+			
+			<div class="jump-container">
+    <a href="#top" class="jump-to-top">Jump to Top ↑</a>
+</div>
+			
+			
+
+    <!-- Lightbox -->
+    <div class="lightbox">
+        <button class="close-lightbox">×</button>
+        <img src="" alt="Lightbox image">
+    </div>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2024 Muhammad Darwisy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Lightbox functionality
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const lightbox = document.querySelector('.lightbox');
+        const lightboxImg = lightbox.querySelector('img');
+        const closeLightbox = document.querySelector('.close-lightbox');
+
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                lightboxImg.src = imgSrc;
+                lightbox.classList.add('active');
+            });
+        });
+
+        closeLightbox.addEventListener('click', () => {
+            lightbox.classList.remove('active');
+        });
+
+        lightbox.addEventListener('click', (e) => {
+            if (e.target === lightbox) {
+                lightbox.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>

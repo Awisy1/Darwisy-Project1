@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>biodata 2</title>
+<style>
+
+    * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-image: url(images/meteor.jpg);
+            min-height: 100vh;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        /* Navbar - smaller and more compact */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            background-color: rgba(0, 0, 0, 0.5);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;   
+            height: 70px;
+			z-index: 10;
+			backdrop-filter: blur(8px);
+			border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+			animation: fadeIn 0.5s ease-out;
+        }
+		@keyframes fadeIn {
+			from { opacity: 0; transform: translateY(-20px); }
+			to { opacity: 1; transform: translateY(0); }
+		}
+
+        .navbar h1 {
+            font-size: 1.5rem;
+            color: #00d4ff;
+            margin: 0;
+			color: #00d4ff;
+			position: relative;
+			overflow: hidden;
+			padding: 5px 0;
+        }
+		.navbar h1::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background: linear-gradient(90deg, transparent, #00d4ff, transparent);
+			animation: shine 3s infinite;
+		}
+		@keyframes shine {
+			0% { transform: translateX(-100%); }
+			100% { transform: translateX(100%); }
+		}
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+			list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #00d4ff;
+            font-size: 1rem;
+            padding: 8px 0;
+            transition: all 0.3s ease;
+			position: relative;
+			transition: all 0.3s ease;
+        }
+		.nav-links a::before {
+			content: '';
+			position: absolute;
+			bottom: -2px;
+			left: 0;
+			width: 100%;
+			height: 2px;
+			background-color: #00d4ff;
+			transform: scaleX(0);
+			transform-origin: right;
+			transition: transform 0.3s ease;
+		}
+
+        .nav-links a:hover {
+			color: #fff;
+			transform: translateY(-2px);
+		}
+
+		.nav-links a:hover::before {
+			transform: scaleX(1);
+			transform-origin: left;
+		}
+
+        /* Main content container */
+        .container {
+            width: 100%;
+            max-width: 800px;
+            margin: 80px auto 40px auto;
+            padding: 2rem;
+        }
+
+        /* Profile section */
+        .profile-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 2rem 0;
+        }
+
+        .profile-frame {
+            width: 170px;
+            height: 170px;
+            border-radius: 50%;
+            padding: 5px;
+            border: 5px solid #0b0f19;
+            box-shadow: 0 0 30px 10px #00d4ff;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+
+        .profile-frame img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Biodata card */
+        .biodata-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            margin-top: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            color: #00d4ff;
+			text-align:center;
+        }
+
+        /* Table styles */
+        .biodata-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+        }
+
+        .biodata-table tr {
+            transition: transform 0.2s ease;
+        }
+
+        .biodata-table tr:hover {
+            transform: translateX(10px);
+        }
+
+        .biodata-table td {
+            padding: 1rem;
+            color: #fff;
+        }
+
+        .biodata-table .label {
+            width: 20%;
+            font-weight: 600;
+            color: #ffd700;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 8px 0 0 8px;
+        }
+
+        .biodata-table .value {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 0;
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .footer-content {
+            color: #00d4ff;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 1rem;
+            }
+            
+            .navbar {
+                padding: 10px 15px;
+            }
+
+            .nav-links {
+                gap: 10px;
+            }
+
+            .biodata-table td {
+                padding: 0.75rem;
+                font-size: 0.9rem;
+            }
+        }
+
+
+
+</style>
+    
+</head>
+<body>
+
+   <div class="navbar">
+        <h1>Darwisy</h1>
+        <div class="nav-links">
+            <a href="Portfolio.html">Home</a>
+            <a href="biodata.html">About me</a>
+            <a href="experience.html">Experience</a>
+            <a href="music.html">Music</a>
+            <a href="sports.html">Sports</a>
+            <a href="gallery.html">Gallery</a>
+        </div>
+    </div>
+
+        </h4>
+    </div>
+
+     <div class="container">
+        <div class="biodata-card">
+            <div class="profile-section">
+                <div class="profile-frame">
+                    <img src="images/raya.jpg" alt="Profile Image">
+                </div>
+				
+                <marquee><h1>My Biography</marquee></h1>
+            </div>
+
+            <table class="biodata-table">
+                <tbody>
+                    <tr>
+                        <td class="label">Full Name</td>
+                        <td class="value">MUHAMMAD DARWISY BIN MOHD SA'AD</td>
+                    </tr>
+					 <tr>
+                        <td class="label">Age</td>
+                        <td class="value">21 years old</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Date of Birth</td>
+                        <td class="value">FEBRUARY 4, 2004</td>
+                    </tr>
+                    <tr>
+                        <td class="label">Address</td>
+                        <td class="value">SEMENYIH,SELANGOR</td>
+                    </tr>
+					 <tr>
+                        <td class="label">Occupation</td>
+                        <td class="value">INFORMATION MANAGEMENT STUDENT</td>
+                    </tr>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+	<footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <p>&copy; 2024 Muhammad Darwisy. All rights reserved.</p>
+            </div>
+            
+            
+        
+    </footer>
+    </div>
+</body>
+</html>
